@@ -33,7 +33,8 @@ workingDir="/opt/k8s-observability"
 
 if [[ ! -s ${KUBECONFIG} ]]; then
   echo -e "\n[1;31mCannot proceed until all variables in script are setup. Exiting[0m"
-  echo -e "Ensure that KUBECONFIG points to the correct location for your cluster.\n"
+  echo -e "Ensure that KUBECONFIG points to the correct location for your cluster."
+  echo -e "Please see README.md for details.\n"
   exit 1
 fi
 calledas="$(basename $(echo ${BASH_SOURCE[0]} | perl -pe 's/loki//'))"
@@ -46,7 +47,11 @@ case ${calledas} in
     [[ ! -s values/kube-prometheus-stack-values.yaml ]] && { echo "Values file for kube-prometheus-stack not found."; exit 3; }
     [[ ! -s values/promtail-values.yaml ]] && { echo "Values file for promtail not found."; exit 3; }
     [[ ! -s values/loki-distributed-values.yaml ]] && { echo "Values file for loki-distributed not found."; exit 3; }
-    #[[ ! -s /etc/.s3k8saws ]] && { echo "Could not find AWS credentials."; exit 3; }
+    if [[ $(grep 'CHANGEME' ./values/loki* 2>/dev/null | wc -l) -ne 0 ]]; then
+      echo -e "\n[1;31mCannot proceed until the loki-distributed values file is configured to suit your environment. Exiting[0m"
+      echo -e "Please see README.md for details.\n"
+      exit 3
+    fi
     kubectl create ns ${ns}
     helm upgrade --install -n ${ns} --create-namespace prom ${workingDir}/kube-prometheus-stack-40.1.2.tgz -f ${workingDir}/values/kube-prometheus-stack-values.yaml --wait
     helm upgrade --install -n ${ns} --create-namespace promtail ${workingDir}/promtail-6.4.0.tgz -f ${workingDir}/values/promtail-values.yaml --wait

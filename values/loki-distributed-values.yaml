@@ -1,0 +1,27 @@
+loki:
+  env:
+    compactor:
+      shared_store: aws
+  schemaConfig:
+    configs:
+    - from: 2020-09-07
+      store: boltdb-shipper
+      object_store: aws
+      schema: v11
+      index:
+        prefix: loki_index_
+        period: 24h
+  storageConfig:
+    aws:
+      s3: s3:/CHANGEME
+      endpoint: https://s3-ap-southeast-2.amazonaws.com/
+      region: ap-southeast-2
+      bucketnames: CHANGEME
+      access_key_id: CHANGEME
+      secret_access_key: CHANGEME
+      s3forcepathstyle: true
+      insecure: false
+      sse_encryption: false
+    boltdb_shipper:
+      shared_store: aws
+      cache_ttl: 168h

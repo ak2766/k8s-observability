@@ -4,12 +4,12 @@ loki:
     - name: AWS_ACCESS_KEY_ID
       valueFrom:
         secretKeyRef:
-          name: <S3_SECRET>
+          name: <S3SECRET>
           key: AWS_ACCESS_KEY_ID
     - name: AWS_SECRET_ACCESS_KEY
       valueFrom:
         secretKeyRef:
-          name: <S3_SECRET>
+          name: <S3SECRET>
           key: AWS_SECRET_ACCESS_KEY
     compactor:
       shared_store: aws

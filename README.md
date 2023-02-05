@@ -17,7 +17,7 @@ Modify the following files and ensure all occurrences of the following keywords 
 
 ```
   Loki-distributed:   ./values/loki-distributed-values.yaml
-    <S3_SECRET>
+    <S3SECRET>
     <REGION>
     <BUCKETNAME>
   Script:             ./scripts/loki.sh

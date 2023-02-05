@@ -27,7 +27,7 @@ getPrometheusLokiPromtail() { #{{{
 ########
 
 ### BEGIN - Ensure these are correct before proceeding ###
-export KUBECONFIG="CHANGEME"
+export KUBECONFIG="<KUBECONFIGPATH>"
 workingDir="/opt/k8s-observability"
 ### END ###
 
@@ -47,7 +47,7 @@ case ${calledas} in
     [[ ! -s values/kube-prometheus-stack-values.yaml ]] && { echo "Values file for kube-prometheus-stack not found."; exit 3; }
     [[ ! -s values/promtail-values.yaml ]] && { echo "Values file for promtail not found."; exit 3; }
     [[ ! -s values/loki-distributed-values.yaml ]] && { echo "Values file for loki-distributed not found."; exit 3; }
-    if [[ $(grep 'CHANGEME' ./values/loki* 2>/dev/null | wc -l) -ne 0 ]]; then
+    if [[ $(grep 'S3SECRET|BUCKETNAME|REGION' ./values/loki* 2>/dev/null | wc -l) -ne 0 ]]; then
       echo -e "\n[1;31mCannot proceed until the loki-distributed values file is configured to suit your environment. Exiting[0m"
       echo -e "Please see README.md for details.\n"
       exit 3

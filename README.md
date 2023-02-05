@@ -13,12 +13,17 @@ Follow these steps to deploy the stack in your cluster:
 ```
 
 ## Customize files to suit your environment
-Modify the following files and ensure all `CHANGEME` occurrences are configured appropriately for your environment:
+Modify the following files and ensure all occurrences of the following keywords are replaced appropriately for your environment in the relevant file:
 
-```sh
-  Loki-distributed:   ./values/loki-distributed-values.yaml
-  Script:             ./scripts/loki.sh
 ```
+  Loki-distributed:   ./values/loki-distributed-values.yaml
+    <S3SECRET>
+    <REGION>
+    <BUCKETNAME>
+  Script:             ./scripts/loki.sh
+    <KUBECONFIGPATH>
+```
+
 ## Deploy to cluster
 
 ```sh
